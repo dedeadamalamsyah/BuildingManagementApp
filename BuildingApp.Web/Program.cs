@@ -5,13 +5,15 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Ganti baris pendaftaran DbContext di Program.cs:
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite("Data Source=BuildingMgmt.db"));
 
-// Tambahin ini biar Interface-nya dikenalin:
 builder.Services.AddScoped<IApplicationDbContext>(provider =>
-    provider.GetRequiredService<ApplicationDbContext>());// Add services to the container.
+    provider.GetRequiredService<ApplicationDbContext>());
+
+builder.Services.AddScoped<IVisitorService, VisitorService>();
+builder.Services.AddScoped<IHolidayService, HolidayService>();
+// Add services to the container.
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
