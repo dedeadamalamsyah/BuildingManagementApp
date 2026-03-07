@@ -2,7 +2,7 @@
 using BuildingApp.Application.Services;
 using BuildingApp.Domain.Entities;
 using Moq;
-using MockQueryable.Moq; // Pakai ini sekarang
+using MockQueryable.Moq;
 using Microsoft.EntityFrameworkCore;
 
 namespace BuildingApp.Tests;
@@ -23,7 +23,7 @@ public class VisitorServiceTests
         mockContext.Setup(c => c.Holidays).Returns(mockSet.Object);
 
         var service = new VisitorService(mockContext.Object);
-        var visitor = new Visitor { FullName = "Budi", Email = "budi@test.com" };
+        var visitor = new Visitor { FullName = "Adam", Email = "adam@test.com" };
 
         var result = await service.RegisterVisitor(visitor);
 

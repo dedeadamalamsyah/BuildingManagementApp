@@ -33,4 +33,12 @@ public class HolidayService : IHolidayService
             await _context.SaveChangesAsync();
         }
     }
+
+    public async Task<Holiday?> GetHolidayById(int id) => await _context.Holidays.FindAsync(id);
+
+    public async Task UpdateHoliday(Holiday holiday)
+    {
+        _context.Holidays.Update(holiday);
+        await _context.SaveChangesAsync();
+    }
 }

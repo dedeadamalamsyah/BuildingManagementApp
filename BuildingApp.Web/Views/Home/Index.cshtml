@@ -1,8 +1,51 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Welcome to Building Management";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container py-5 text-center">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <h1 class="display-4 fw-bold mb-4">Building Visitor Portal</h1>
+            <p class="lead text-muted mb-5">
+                Welcome! Please register your visit before entering the building premises.
+                Our automated system will process your registration instantly.
+            </p>
+
+            @if (ViewBag.IsHoliday)
+            {
+                <div class="alert alert-danger shadow-sm py-4 mb-4">
+                    <h4 class="alert-heading"><i class="bi bi-calendar-x"></i> Building is Closed Today</h4>
+                    <p class="mb-0">Today is a designated holiday. Visitor registration is currently disabled.</p>
+                </div>
+                <button class="btn btn-secondary btn-lg px-5 disabled">Registration Closed</button>
+            }
+            else
+            {
+                <div class="alert alert-success shadow-sm py-4 mb-4">
+                    <h4 class="alert-heading"><i class="bi bi-check-circle"></i> Building is Open</h4>
+                    <p class="mb-0">You can register your visit now and get instant approval.</p>
+                </div>
+                <a asp-controller="Visitor" asp-action="Register" class="btn btn-primary btn-lg px-5 shadow">
+                    <i class="bi bi-pencil-square"></i> Register as Visitor
+                </a>
+            }
+
+            <div class="mt-5 pt-5 border-top">
+                <div class="row text-start">
+                    <div class="col-md-4">
+                        <h6><i class="bi bi-shield-lock"></i> Secure Access</h6>
+                        <p class="small text-muted">All visitors must be registered for safety and security purposes.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h6><i class="bi bi-lightning"></i> Instant Approval</h6>
+                        <p class="small text-muted">No more waiting. Get your visit approved automatically on normal days.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h6><i class="bi bi-person-badge"></i> Admin Portal</h6>
+                        <p class="small text-muted">Authorized personnel can manage records via the <a asp-controller="Admin" asp-action="Visitors">Admin Dashboard</a>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

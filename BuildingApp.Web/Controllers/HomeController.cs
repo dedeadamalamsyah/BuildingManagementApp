@@ -1,13 +1,25 @@
-using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+using BuildingApp.Application.Interfaces;
 using BuildingApp.Web.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 
 namespace BuildingApp.Web.Controllers;
 
 public class HomeController : Controller
 {
-    public IActionResult Index()
+    private readonly IApplicationDbContext _context;
+
+    public HomeController(IApplicationDbContext context)
     {
+        _context = context;
+    }
+
+    public async Task<IActionResult> Index()
+    {
+        var isHoliday = await _context.Holidays.AnyAsync(h => h.Date.Date == DateTime.Today);
+        ViewBag.IsHoliday = isHoliday;
+
         return View();
     }
 

@@ -14,11 +14,10 @@ public class VisitorService : IVisitorService
 
     public async Task<bool> RegisterVisitor(Visitor visitor)
     {
-        // Pamer LINQ: Cek apakah hari ini libur
         var isHoliday = await _context.Holidays
             .AnyAsync(h => h.Date.Date == DateTime.Today.Date);
 
-        if (isHoliday) return false; // Registrasi ditolak otomatis
+        if (isHoliday) return false;
 
         _context.Visitors.Add(visitor);
         await _context.SaveChangesAsync();
@@ -29,11 +28,14 @@ public class VisitorService : IVisitorService
     {
         var query = _context.Visitors.AsQueryable();
 
-        // Pamer LINQ: Filter Date Range
-        if (from.HasValue && to.HasValue)
+        if (from.HasValue)
         {
-            query = query.Where(v => v.RegistrationDate.Date >= from.Value.Date
-                                  && v.RegistrationDate.Date <= to.Value.Date);
+            query = query.Where(v => v.RegistrationDate.Date >= from.Value.Date);
+        }
+
+        if (to.HasValue)
+        {
+            query = query.Where(v => v.RegistrationDate.Date <= to.Value.Date);
         }
 
         return await query.OrderByDescending(v => v.RegistrationDate).ToListAsync();
