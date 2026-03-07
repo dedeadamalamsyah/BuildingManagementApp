@@ -1,6 +1,17 @@
+using BuildingApp.Application.Interfaces;
+using BuildingApp.Application.Services;
+using BuildingApp.Infrastructure;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Ganti baris pendaftaran DbContext di Program.cs:
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlite("Data Source=BuildingMgmt.db"));
+
+// Tambahin ini biar Interface-nya dikenalin:
+builder.Services.AddScoped<IApplicationDbContext>(provider =>
+    provider.GetRequiredService<ApplicationDbContext>());// Add services to the container.
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

@@ -1,0 +1,41 @@
+﻿@model BuildingApp.Domain.Entities.Visitor
+
+@{
+    ViewData["Title"] = "Visitor Registration";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Building Visitor Registration</h4>
+                </div>
+                <div class="card-body p-4">
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+                    }
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <form asp-action="Register" method="post">
+                        <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input asp-for="FullName" class="form-control" placeholder="Enter your full name" />
+                            <span asp-validation-for="FullName" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Email Address</label>
+                            <input asp-for="Email" class="form-control" placeholder="email@example.com" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Register Now</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
